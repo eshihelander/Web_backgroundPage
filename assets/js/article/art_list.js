@@ -19,7 +19,7 @@ $(function() {
         // 重新定义筛选后要渲染的文章列表参数 data
         data.cate_id = cate_id;
         data.state = state;
-        console.log(data);
+        // console.log(data);
         getArtList();
 
     });
@@ -34,12 +34,12 @@ $(function() {
             let len = $("#btnDelArt").length;
             // 获取文章Id
             let id = $("#btnDelArt").attr("data-id");
-            console.log(id);
+            // console.log(id);
             $.ajax({
                 type: "GET",
                 url: "/my/article/delete/" + id,
                 success: function(res) {
-                    console.log(res);
+                    // console.log(res);
                     if (res.status !== 0) {
                         return layui.layer.msg('删除文章失败');
                     }
@@ -58,6 +58,42 @@ $(function() {
             layer.close(index);
         });
 
+    });
+    // 给编辑按钮注册点击事件
+    $("tbody").on("click", "#btnEdit", function() {
+        const id = $(this).siblings().eq(1).attr("data-id");
+        // 发起ajax请求 获取文章信息
+        $.ajax({
+            type: "GET",
+            url: "/my/article/" + id,
+            success: function(res) {
+                // console.log(res);
+                if (res.status !== 0) return layui.layer.msg(res.message);
+                // 由于要实现跨页面读取数据 所以要再这里把获取到的数据先存储到本地存储中
+                localStorage.setItem("resData", JSON.stringify(res.data));
+                // 跳转到编辑页面
+                location.href = "../article/art_edit.html";
+            }
+        });
+
+    });
+    // 给查看按钮注册点击事件
+    $("tbody").on("click", "#btnView", function() {
+        const id = $(this).siblings().eq(1).attr("data-id");
+        // console.log(id);
+        // 发起ajax请求 获取文章信息
+        $.ajax({
+            type: "GET",
+            url: "/my/article/" + id,
+            success: function(res) {
+                // console.log(res);
+                if (res.status !== 0) return layui.layer.msg(res.message);
+                // 由于要实现跨页面读取数据 所以要再这里把获取到的数据先存储到本地存储中
+                localStorage.setItem("resData", JSON.stringify(res.data));
+                // 跳转到编辑页面
+                location.href = "../article/art_View.html";
+            }
+        });
     })
 
     // 格式化时间过滤器
@@ -80,8 +116,6 @@ $(function() {
         return n;
     }
 
-
-
     // 封装获取文章列表的ajax函数
     function getArtList() {
         $.ajax({
@@ -92,7 +126,7 @@ $(function() {
                 if (res.status !== 0) {
                     return layui.layer.msg('获取文章列表失败');
                 }
-                console.log(res);
+                // console.log(res);
 
                 // 调用art-template模板引擎
                 var htmlStr = template("tpl_artList", res);
@@ -112,7 +146,7 @@ $(function() {
                 if (res.status !== 0) {
                     return layui.layer.msg('获取文章分类列表失败');
                 }
-                console.log(res);
+                // console.log(res);
                 var htmlStr = template("tpl_artCate", res);
                 // console.log(htmlStr);
                 $("#select_artCate").html(htmlStr);
@@ -152,4 +186,5 @@ $(function() {
             });
         });
     }
+
 });

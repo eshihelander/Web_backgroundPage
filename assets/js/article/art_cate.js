@@ -42,7 +42,7 @@ $(function() {
             type: 1, // 指定基本层类型
             area: ['500px', '230px'], // 设置模态框的宽和高
             title: '修改文章分类',
-            content: $("#btnEdit").html(),
+            content: $("#btnCateEdit").html(),
         });
         // 发起ajax请求 获取数据 填充到表单
         $.ajax({

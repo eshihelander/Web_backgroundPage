@@ -45,7 +45,7 @@
                     <col width="150">
                     <col width="180">
                     <col width="150">
-                    <col width="150">
+                    <col width="180">
                 </colgroup>
                 <thead>
                     <tr>
@@ -74,7 +74,8 @@
             <td>{{$value.pub_date | dateFormat}}</td>
             <td>{{$value.state}}</td>
             <td>
-                <button type="button" class="layui-btn layui-btn-warm layui-btn-xs">编辑</button>
+                <button type="button" class="layui-btn layui-btn-xs" id="btnView">查看</button>
+                <button type="button" class="layui-btn layui-btn-warm layui-btn-xs" id="btnEdit">编辑</button>
                 <button type="button" class="layui-btn layui-btn-danger layui-btn-xs" id="btnDelArt" data-id="{{$value.Id}}">删除</button>
             </td>
         </tr>
